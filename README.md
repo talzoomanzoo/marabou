@@ -1,7 +1,7 @@
 # Assignment 3 — Neural Network Reliability Verification
 
 **Course:** Neural Network Verification  
-**Due Date:** November 28, 2025  
+**Due Date:** December 12, 2025  
 **Author:** <YOUR NAME>
 
 ---
