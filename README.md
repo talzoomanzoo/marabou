@@ -25,10 +25,13 @@ This README describes the setup, model/dataset choices, execution instructions, 
 ```
 Assignment3/
 │
-├── run_marabou_example.py  # Main script (dataset → ONNX → verification)
+├── marabou_model.py        # Main implementation (model, dataset, ONNX export, verification)
+├── test_marabou.py         # Test script to run the entire pipeline
 ├── README.md               # This file
+├── requirements.txt        # Python dependencies
 ├── report.pdf              # Summary report (provided by student)
 ├── data/                   # MNIST dataset (auto-downloaded)
+│   └── MNIST/
 └── mnist_mlp.onnx          # ONNX model (auto-generated)
 ```
 
@@ -115,7 +118,7 @@ This is expected and harmless. Marabou successfully loads ONNX models at opset 1
 To run the entire pipeline:
 
 ```bash
-python run_marabou_example.py
+python test_marabou.py
 ```
 
 The script will:
@@ -127,6 +130,16 @@ The script will:
 5. Apply a verification constraint
 6. Run the solver
 7. Print SAT/UNSAT and solver statistics
+
+### Code Organization
+
+- **`marabou_model.py`**: Contains the main implementation:
+  - `SimpleMLP`: PyTorch model definition
+  - `load_dataset()`: MNIST dataset loader
+  - `export_model_to_onnx()`: ONNX export function
+  - `run_marabou()`: Marabou verification function
+
+- **`test_marabou.py`**: Test script that orchestrates the entire workflow
 
 ---
 
@@ -175,7 +188,7 @@ Your Marabou version does not support:
 eq = MarabouCore.Equation(MarabouCore.Equation.GE)
 ```
 
-Note: In some versions, you may need to use `MarabouCore.Equation.GE` directly (not `.value`).
+Note: Do NOT use `.value` (e.g., `MarabouCore.Equation.GE.value`) as it will cause a TypeError. Pass the enum member directly.
 
 ### 4. Solve Return Value
 
